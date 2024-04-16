@@ -1,7 +1,5 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import { PASSWORD_RESET } from "./lib/utils";
 
 export const middleware = async (req) => {
   const token = await getToken({ req });
@@ -13,10 +11,18 @@ export const middleware = async (req) => {
     "/auth/set-password",
   ];
 
-  if (pathname === "/login" || pathname === "/create-account") {
+  // redirecting to correct auth urls
+  if (
+    pathname === "/login" ||
+    pathname === "/create-account" ||
+    pathname === "/recover-password" ||
+    pathname === "/set-password" ||
+    pathname === "/logout"
+  ) {
     return NextResponse.redirect(new URL(`/auth${pathname}`, req.url));
   }
-  // checking for token and verifying
+
+  // checking for token in set-password route
   if (pathname.startsWith("/auth/set-password")) {
     const tokenParams = req.nextUrl.searchParams.get("token");
     if (!tokenParams)

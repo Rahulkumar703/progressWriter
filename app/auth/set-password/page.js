@@ -14,7 +14,6 @@ const RecoverPasswordPage = async ({ searchParams }) => {
   const token = searchParams.token;
 
   const res = await verifyPasswordResetToken(token);
-  console.log(res);
   if (res && !res?.isVarified)
     return (
       <Card className="shadow-2xl">

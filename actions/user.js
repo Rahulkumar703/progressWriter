@@ -180,6 +180,15 @@ export const updatePassword = async (values) => {
           code: 403,
         };
 
+      if (Date.now() - new Date(validToken.createdAt) > 5 * 60 * 1000) {
+        await Token.deleteOne({ _id: validToken._id });
+        return {
+          message: "Password reset link Expired.",
+          type: "error",
+          code: 403,
+        };
+      }
+
       const userExist = await User.findOne({ _id: user });
 
       if (!userExist)
