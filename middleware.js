@@ -33,7 +33,7 @@ export const middleware = async (req) => {
   }
 
   // prevent to visit public pages after login
-  if (token && publicRoutes.includes(pathname)) {
+  if ((token && publicRoutes.includes(pathname)) || pathname === "/project") {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -42,7 +42,15 @@ export const middleware = async (req) => {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  NextResponse.next();
+  // Setting Headers
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-url", req.url);
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 };
 
 export const config = {
