@@ -62,7 +62,7 @@ const RecoverPasswordForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6 bg-background rounded-md w-full xs:w-96"
+            className="flex flex-col gap-6 bg-background rounded-md"
           >
             <div className="flex flex-col gap-6 ">
               <FormField

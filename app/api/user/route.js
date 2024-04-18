@@ -1,4 +1,4 @@
-import { signup } from "@/actions/user";
+import { getUsers, signup } from "@/actions/user";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
@@ -34,6 +34,7 @@ export const GET = async () => {
         { status: 403 }
       );
   } catch (error) {
+    console.log(error);
     return NextResponse.json({
       mesasge: error.mesasge,
       type: "error",

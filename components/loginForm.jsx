@@ -72,7 +72,7 @@ const LoginForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-6 bg-background rounded-md w-full xs:w-96"
+            className="flex flex-col gap-6 bg-background rounded-md"
           >
             <div className="flex flex-col gap-6 ">
               <FormField
@@ -131,7 +131,7 @@ const LoginForm = () => {
         <SocialLogin isPending={isPending} />
 
         <div className="mt-4">
-          <P>
+          <P className={"flex items-center flex-wrap justify-center gap-1"}>
             Don&apos;t have an account?{" "}
             <Link
               href={"/create-account"}

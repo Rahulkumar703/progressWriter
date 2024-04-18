@@ -11,6 +11,7 @@ import {
 } from "@/schema/auth";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { revalidatePath } from "next/cache";
 
 dbConnect();
 
@@ -24,6 +25,7 @@ export const signup = async (values) => {
       const errors = result.error.errors;
       let err = {
         type: "error",
+        message: "Validation Error",
         errors: [
           ...errors.map((err) => {
             return { [err.path[0]]: err.message };
@@ -45,6 +47,8 @@ export const signup = async (values) => {
         };
       await User.create({ name, email, password });
 
+      revalidatePath("/project/new");
+
       return { message: "SignedUp Successfully", type: "success", code: 200 };
     }
   } catch (error) {
@@ -63,7 +67,14 @@ export const login = async ({ email, password }) => {
         code: 404,
       };
     }
-
+    if (!user?.password) {
+      return {
+        message:
+          "You have previously signed up with Social Account (eg- Google or GitHub). Please log in using them.",
+        type: "info",
+        code: 400,
+      };
+    }
     const passwordMatched = await bcrypt.compare(password, user.password);
 
     if (!passwordMatched) {
@@ -86,7 +97,7 @@ export const login = async ({ email, password }) => {
 
 export const getUsers = async () => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("name email image");
     return {
       message: "Users Fetched Successfully",
       type: "success",
@@ -107,6 +118,7 @@ export const sendPasswordResetLink = async (values) => {
       const errors = result.error.errors;
       let err = {
         type: "error",
+        message: "Validation Error",
         errors: [
           ...errors.map((err) => {
             return { [err.path[0]]: err.message };
@@ -160,6 +172,7 @@ export const updatePassword = async (values) => {
       const errors = result.error.errors;
       let err = {
         type: "error",
+        message: "Validation Error",
         errors: [
           ...errors.map((err) => {
             return { [err.path[0]]: err.message };

@@ -22,12 +22,6 @@ const UserSchema = Schema(
     password: {
       type: String,
     },
-    projects: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "project",
-      },
-    ],
   },
   { timestamps: true }
 );

@@ -8,6 +8,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 
 export const metadata = {
   title: "Set a New Password",
+  description: "Set your new password.",
 };
 
 const RecoverPasswordPage = async ({ searchParams }) => {
