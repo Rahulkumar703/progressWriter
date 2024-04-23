@@ -113,7 +113,11 @@ const LoginForm = () => {
               />
               <div className="ml-auto">
                 <Link
-                  href={"/auth/recover-password"}
+                  href={`/auth/recover-password${
+                    form.getValues("email") !== ""
+                      ? `?email=${form.getValues("email")}`
+                      : ""
+                  }`}
                   className="text-blue-400 hover:underline"
                 >
                   Forgot Password ?

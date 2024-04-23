@@ -25,13 +25,13 @@ import {
 import { recoverPasswordSchema } from "@/schema/auth";
 import { sendPasswordResetLink } from "@/actions/user";
 
-const RecoverPasswordForm = () => {
+const RecoverPasswordForm = ({ email }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(recoverPasswordSchema),
     defaultValues: {
-      email: "",
+      email: email || "",
     },
   });
 

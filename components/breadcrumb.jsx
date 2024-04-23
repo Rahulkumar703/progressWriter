@@ -1,7 +1,5 @@
 "use client";
-
 import Link from "next/link";
-
 import {
   Breadcrumb as BC,
   BreadcrumbEllipsis,
@@ -23,11 +21,10 @@ export function Breadcrumb() {
 
   const crumblist = pathNestedRoutes.map((subpath, idx) => {
     const href = "/" + pathNestedRoutes.slice(0, idx + 1).join("/");
-    const pathname = new URLSearchParams(subpath);
+    const pathname = subpath.replaceAll("+", " ");
     return { href, pathname, icon: null };
   });
 
-  console.log(crumblist);
   return (
     <BC className="w-full">
       <BreadcrumbList>
@@ -49,37 +46,34 @@ export function Breadcrumb() {
           )}
         </BreadcrumbItem>
 
-        {crumblist.length > 2 ? (
+        {crumblist.length > 2 && (
           <>
             <BreadcrumbSeparator />
             <BreadcrumbEllipsis />
           </>
-        ) : null}
+        )}
 
-        {crumblist.slice(-2, crumblist.length).map((crumb, index) => {
-          return (
-            <span
-              key={index}
-              className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5"
-            >
-              <BreadcrumbSeparator />
-
-              <BreadcrumbItem>
-                {index === crumblist.length - 1 ? (
-                  <BreadcrumbPage className="capitalize">
+        {crumblist.slice(-2).map((crumb, index) => (
+          <span
+            key={index}
+            className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5"
+          >
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              {index === crumblist.length - 1 ? (
+                <BreadcrumbPage className="capitalize">
+                  {crumb.pathname}
+                </BreadcrumbPage>
+              ) : (
+                <BreadcrumbLink asChild>
+                  <Link href={crumb.href} className="capitalize">
                     {crumb.pathname}
-                  </BreadcrumbPage>
-                ) : (
-                  <BreadcrumbLink asChild>
-                    <Link href={crumb.href} className="capitalize">
-                      {crumb.pathname}
-                    </Link>
-                  </BreadcrumbLink>
-                )}
-              </BreadcrumbItem>
-            </span>
-          );
-        })}
+                  </Link>
+                </BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+          </span>
+        ))}
       </BreadcrumbList>
     </BC>
   );

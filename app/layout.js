@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <Header />
           <Navbar />
           <main>{children}</main>
-          <Toaster richColors />
+          <Toaster richColors position="top-right" className="top-24" />
         </Providers>
       </body>
     </html>

@@ -36,8 +36,8 @@ export const options = {
           const existingUser = await User.findOne({ email });
           if (existingUser) return existingUser;
           else {
-            await User.create({ name, email, image });
-            return true;
+            const user = await User.create({ name, email, image });
+            return user;
           }
         } else return user || false;
       } catch (error) {
@@ -51,6 +51,7 @@ export const options = {
         if (user) {
           token._id = user._id?.toString();
           token.email = user.email;
+          token.image = user.image;
         }
         const existingUser = await User.findOne({ email: token.email }).select(
           "_id"

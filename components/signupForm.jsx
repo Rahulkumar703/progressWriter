@@ -46,8 +46,8 @@ const SignupForm = () => {
     startTransition(async () => {
       try {
         const data = await signup(values);
-        toast.success("Account Created Successfully.");
-        router.push("/login");
+        toast[data.type](data.message);
+        if (data.type === "success") router.push("/login");
       } catch (error) {
         toast.error(error.message);
       }

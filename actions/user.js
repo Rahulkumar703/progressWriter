@@ -1,7 +1,7 @@
 "use server";
 
 import { dbConnect } from "@/db/dbConnect";
-import { PASSWORD_RESET, sendPasswordResetMail } from "@/lib/utils";
+import { PASSWORD_RESET } from "@/lib/helper";
 import Token from "@/models/Token";
 import User from "@/models/User";
 import {
@@ -12,6 +12,7 @@ import {
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { revalidatePath } from "next/cache";
+import { sendPasswordResetMail } from "./utils";
 
 dbConnect();
 

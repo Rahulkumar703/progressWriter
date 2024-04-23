@@ -12,7 +12,7 @@ const MemberSchema = Schema(
       default: false,
     },
   },
-  { _id: false }
+  { _id: false, timestamps: true }
 );
 
 const ProjectSchema = Schema(
@@ -31,6 +31,10 @@ const ProjectSchema = Schema(
       type: String,
     },
     members: [MemberSchema],
+    inviteLink: {
+      type: String,
+      default: "",
+    },
     visibility: {
       type: String,
       enum: ["public", "private"],

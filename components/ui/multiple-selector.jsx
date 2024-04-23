@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/command";
 import { Command as CommandPrimitive, useCommandState } from "cmdk";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/helper";
 import UserAvatar from "../userAvatar";
 import { Muted } from "./typography";
 import { Button } from "./button";
@@ -251,19 +251,19 @@ const MultipleSelector = forwardRef(
           <div className="flex flex-wrap gap-1">
             {selected.map((option) => {
               return (
-                <Badge
+                <div
                   key={option.email}
                   className={cn(
                     "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground p-0",
                     "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
-                    "p-0 overflow-visible relative",
+                    "p-0 overflow-visible relative rounded-full [&:not(:first-child)]:-ml-4 border border-background",
                     badgeClassName
                   )}
                   data-fixed={option.fixed}
                   data-disabled={disabled}
                 >
                   <HoverCard>
-                    <HoverCardTrigger asChild>
+                    <HoverCardTrigger asChild className="">
                       <Button
                         variant="link"
                         type="button"
@@ -289,7 +289,7 @@ const MultipleSelector = forwardRef(
 
                   <button
                     className={cn(
-                      "group ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-0 right-0 z-20 bg-primary p-1 -translate-y-1/4 translate-x-1/4",
+                      "hover:bg-destructive ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-0 right-0 z-20 bg-primary p-1 -translate-y-1/4 translate-x-1/4",
                       (disabled || option.fixed) && "hidden"
                     )}
                     onKeyDown={(e) => {
@@ -303,9 +303,9 @@ const MultipleSelector = forwardRef(
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="h-3 w-3 text-muted-foreground group-hover:text-white" />
+                    <X className="h-3 w-3 text-muted-foreground  text-white" />
                   </button>
-                </Badge>
+                </div>
               );
             })}
             <CommandPrimitive.Input

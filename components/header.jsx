@@ -17,23 +17,24 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 
 const Header = async () => {
   const session = await getServerSession(options);
+  const user = session?.user;
 
   return (
-    <header className="sticky top-0 bg-background h-20 shadow-lg z-30">
-      <Wrapper className={`flex items-center justify-between`}>
+    <header className="sticky top-0 bg-background h-20 shadow-lg z-30 flex items-center w-full">
+      <Wrapper className={`flex items-center justify-between w-full`}>
         <Link href={"/"}>
           <H1 className="font-bold">
             <span className="text-purple-400">P</span>rogress
           </H1>
         </Link>
-        {session?.user._id ? (
+        {user?._id ? (
           <DropdownMenu>
             <DropdownMenuTrigger>
               <UserAvatar user={session.user} />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel className="capitalize text-center">
-                H!, {session?.user?.name.split(" ")[0]}
+                H!, {user?.name.split(" ")[0]}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <Link href={"/profile"} className="h-inherit w-full">

@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/helper";
 import { motion } from "framer-motion";
 
 const Wrapper = ({ children, className, animate = false }) => {

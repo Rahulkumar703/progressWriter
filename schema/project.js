@@ -16,3 +16,14 @@ export const projectSchema = z.object({
     .length(),
   visibility: z.enum(["private", "public"]).default("private"),
 });
+
+export const updateProjectSchema = z.object({
+  id: z.string().min(1, {
+    message: "Project id not specified.",
+  }),
+  name: z.string().min(1, {
+    message: "Please enter Poject name.",
+  }),
+  description: z.string().optional(),
+  visibility: z.enum(["private", "public"]),
+});

@@ -1,7 +1,7 @@
+import { verifyPasswordResetToken } from "@/actions/utils";
 import SetPasswordForm from "@/components/setPasswordForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { verifyPasswordResetToken } from "@/lib/utils";
 import jwt from "jsonwebtoken";
 import Link from "next/link";
 import { MdKeyboardArrowLeft } from "react-icons/md";

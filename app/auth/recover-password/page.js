@@ -6,8 +6,8 @@ export const metadata = {
     "Forgot your password recover your account by reseting the password.",
 };
 
-const RecoverPasswordPage = () => {
-  return <RecoverPasswordForm />;
+const RecoverPasswordPage = ({ searchParams }) => {
+  return <RecoverPasswordForm email={searchParams?.email || null} />;
 };
 
 export default RecoverPasswordPage;

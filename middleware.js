@@ -31,6 +31,13 @@ export const middleware = async (req) => {
       NextResponse.next();
     }
   }
+  if (pathname.startsWith("/project/invite")) {
+    const tokenParams = req.nextUrl.searchParams.get("token");
+    if (!tokenParams) return NextResponse.redirect(new URL("/", req.url));
+    else {
+      NextResponse.next();
+    }
+  }
 
   // prevent to visit public pages after login
   if ((token && publicRoutes.includes(pathname)) || pathname === "/project") {
