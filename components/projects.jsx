@@ -29,10 +29,10 @@ const Projects = ({ projects }) => {
               <Card className="border-b-4 border-b-purple-200 shadow-md h-full">
                 <CardHeader>
                   <CardTitle className="uppercase">
-                    {trim(project.name, 20)}
+                    {trim(project.name, 12)}
                   </CardTitle>
                   <CardDescription className="capitalize">
-                    {trim(project.description, 30)}
+                    {trim(project.description, 50)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2 bg-secondary py-3 h-full">

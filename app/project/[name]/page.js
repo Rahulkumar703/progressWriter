@@ -53,7 +53,7 @@ const ProjectPage = async ({ searchParams }) => {
             <div className="">
               <div className="flex gap-2 items-center">
                 <H1 className={"xs:text-2xl text-base md:text-3xl"}>
-                  {trim(project.name, 20)}
+                  {trim(project.name, 12)}
                 </H1>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -110,11 +110,13 @@ const ProjectPage = async ({ searchParams }) => {
                       "text-muted-foreground font-medium capitalize text-xs md:text-base"
                     }
                   >
-                    {trim(project.description, 30) || "No Description"}
+                    {trim(project.description, 50) || "No Description"}
                   </H4>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="capitalize">{project.description}</p>
+                  <p className="capitalize max-w-80 w-full">
+                    {project.description}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </div>
