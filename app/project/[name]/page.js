@@ -40,6 +40,11 @@ const ProjectPage = async ({ searchParams }) => {
   const session = await getServerSession(options);
   const data = await getProject(searchParams.id);
   const project = data.project;
+
+  const isLoggedInUserAdmin = project.members.find(
+    (member) => member.user._id?.toString() === session?.user._id?.toString()
+  )?.admin;
+
   return (
     <Wrapper className={"mt-20"}>
       {project ? (
@@ -77,12 +82,14 @@ const ProjectPage = async ({ searchParams }) => {
                         </div>
                       </DialogDescription>
                     </DialogHeader>
-                    <EditProject
-                      id={project._id.toString()}
-                      name={project.name}
-                      description={project.description}
-                      visibility={project.visibility}
-                    />
+                    {isLoggedInUserAdmin && (
+                      <EditProject
+                        id={project._id.toString()}
+                        name={project.name}
+                        description={project.description}
+                        visibility={project.visibility}
+                      />
+                    )}
                     <ScrollArea className="h-72 w-full rounded-md mt-6">
                       <div className="flex flex-col gap-2">
                         <ProjectMembers

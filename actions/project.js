@@ -130,7 +130,7 @@ export const addProject = async (values) => {
         return {
           type: "success",
           code: 200,
-          message: "Pojects created Successfuly.",
+          message: "Poject created Successfuly.",
           project: { _id: newProject._id.toString(), name: newProject.name },
         };
       }
@@ -190,7 +190,7 @@ export const updateProject = async (values) => {
         return {
           type: "success",
           code: 200,
-          message: "Pojects created Successfuly.",
+          message: "Poject updated Successfuly.",
         };
       }
     }

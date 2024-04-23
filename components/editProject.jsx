@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { updateProjectSchema } from "@/schema/project";
-import { useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,6 +36,7 @@ import { useRouter } from "next/navigation";
 const EditProject = ({ id, name, description, visibility }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const closeRef = useRef();
   const form = useForm({
     resolver: zodResolver(updateProjectSchema),
     mode: "onChange",
@@ -54,6 +55,7 @@ const EditProject = ({ id, name, description, visibility }) => {
         toast[data.type](data.message);
         if (data.type === "success") {
           const name = form.getValues("name");
+          closeRef.current.click();
           router.replace(`/project/${name}?id=${id}`);
         }
       } catch (error) {
@@ -173,7 +175,10 @@ const EditProject = ({ id, name, description, visibility }) => {
           </Form>
           <DrawerFooter>
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" ref={closeRef}>
+                {" "}
+                Cancel
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </Wrapper>

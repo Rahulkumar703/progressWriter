@@ -254,9 +254,7 @@ const MultipleSelector = forwardRef(
                 <div
                   key={option.email}
                   className={cn(
-                    "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground p-0",
-                    "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
-                    "p-0 overflow-visible relative rounded-full [&:not(:first-child)]:-ml-4 border border-background",
+                    "p-0 overflow-visible relative rounded-full [&:not(:first-child)]:-ml-4 border-4 border-background flex items-center justify-center",
                     badgeClassName
                   )}
                   data-fixed={option.fixed}
@@ -289,7 +287,7 @@ const MultipleSelector = forwardRef(
 
                   <button
                     className={cn(
-                      "hover:bg-destructive ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-0 right-0 z-20 bg-primary p-1 -translate-y-1/4 translate-x-1/4",
+                      "hover:bg-destructive transition-colors ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 absolute top-0 right-0 z-20 bg-primary p-1 -translate-y-1/4 translate-x-1/4",
                       (disabled || option.fixed) && "hidden"
                     )}
                     onKeyDown={(e) => {
