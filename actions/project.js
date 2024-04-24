@@ -227,7 +227,7 @@ export const makeAdmin = async (memberId, projectId) => {
       );
 
       revalidatePath(`/`);
-      revalidatePath(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
+      revalidatePath(`/project/${project.name.replaceAll(" ", "+")}?id=${id}`);
       return {
         type: "success",
         code: 200,
@@ -270,7 +270,7 @@ export const removeAdmin = async (memberId, projectId) => {
       );
 
       revalidatePath(`/`);
-      revalidatePath(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
+      revalidatePath(`/project/${project.name.replaceAll(" ", "+")}?id=${id}`);
       return {
         type: "success",
         code: 200,
@@ -309,7 +309,7 @@ export const removeFromProject = async (memberId, projectId) => {
       );
 
       revalidatePath(`/`);
-      revalidatePath(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
+      revalidatePath(`/project/${project.name.replaceAll(" ", "+")}?id=${id}`);
 
       return {
         type: "success",
@@ -356,7 +356,7 @@ export const addMember = async (projectId) => {
       await project.save();
 
       revalidatePath(`/`);
-      revalidatePath(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
+      revalidatePath(`/project/${project.name.replaceAll(" ", "+")}?id=${id}`);
       return {
         type: "success",
         code: 200,
