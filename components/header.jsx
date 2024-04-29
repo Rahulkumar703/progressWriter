@@ -38,12 +38,12 @@ const Header = async () => {
                 H!, {user?.name.split(" ")[0]}
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <Link href={"/profile"} className="h-inherit w-full">
+              {/* <Link href={"/profile"} className="h-inherit w-full">
                 <DropdownMenuItem>
                   <User2 className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </DropdownMenuItem>
-              </Link>
+              </Link> */}
               <Link href={"/"} className="h-inherit w-full">
                 <DropdownMenuItem>
                   <Code2 className="mr-2 h-4 w-4" />

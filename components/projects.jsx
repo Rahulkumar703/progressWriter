@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -50,7 +49,10 @@ const Projects = ({ projects }) => {
                               <div
                                 className={`flex gap-2 items-center border-2 border-secondary rounded-full [&:not(:first-child)]:-ml-4 z-[${index}] relative`}
                               >
-                                <UserAvatar user={member.user} />
+                                <UserAvatar
+                                  user={member.user}
+                                  className={"w-8 h-8"}
+                                />
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>

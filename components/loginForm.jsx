@@ -46,14 +46,14 @@ const LoginForm = () => {
     startTransition(async () => {
       try {
         const data = await signIn("credentials", {
-          redirect: true,
+          redirect: false,
           ...values,
-          callbackUrl,
         });
         if (data?.error) {
           toast.error(data.error);
         } else {
           toast.success("Signedin Successfully.");
+          router.replace(callbackUrl);
         }
       } catch (error) {
         toast.error(error.message);

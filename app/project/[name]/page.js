@@ -93,14 +93,12 @@ const ProjectPage = async ({ searchParams }) => {
                       />
                     )}
                     <ScrollArea className="h-72 w-full rounded-md mt-6">
-                      <div className="flex flex-col gap-2">
-                        <ProjectMembers
-                          projectId={project._id.toString()}
-                          inviteLink={project.inviteLink}
-                          members={JSON.stringify(project.members)}
-                          loggedInUser={JSON.stringify(session.user)}
-                        />
-                      </div>
+                      <ProjectMembers
+                        projectId={project._id.toString()}
+                        inviteLink={project.inviteLink}
+                        members={JSON.stringify(project.members)}
+                        loggedInUser={JSON.stringify(session.user)}
+                      />
                     </ScrollArea>
                   </DialogContent>
                 </Dialog>

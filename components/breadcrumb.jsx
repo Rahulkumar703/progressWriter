@@ -21,7 +21,7 @@ export function Breadcrumb() {
 
   const crumblist = pathNestedRoutes.map((subpath, idx) => {
     const href = "/" + pathNestedRoutes.slice(0, idx + 1).join("/");
-    const pathname = subpath.replaceAll("+", " ");
+    const pathname = subpath.replaceAll("+", " ").replaceAll("%20", " ");
     return { href, pathname, icon: null };
   });
 

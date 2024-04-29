@@ -65,7 +65,7 @@ const ProjectMembers = ({
     });
   };
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
         <H4>Members</H4>
         {isLoggedInUserAdmin ? <AddMembers inviteLink={inviteLink} /> : null}
@@ -170,7 +170,7 @@ const ProjectMembers = ({
             );
           })}
       </div>
-    </>
+    </div>
   );
 };
 

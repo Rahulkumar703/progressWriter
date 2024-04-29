@@ -91,6 +91,7 @@ const AddProgress = ({ projectId }) => {
                       <FormLabel>Your Progress</FormLabel>
                       <FormControl>
                         <Textarea
+                          className="min-h-32 resize-y"
                           autoComplete="none"
                           placeholder="Enter your project progress for today or this week."
                           {...field}
