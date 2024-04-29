@@ -4,6 +4,11 @@ import { NextResponse } from "next/server";
 export const middleware = async (req) => {
   const token = await getToken({ req });
   const pathname = req.nextUrl.pathname;
+  const search = req.nextUrl.search;
+  const searchParams = req.nextUrl.searchParams;
+
+  const callbackUrl = searchParams.get("callbackUrl") || `${pathname}${search}`;
+
   const publicRoutes = [
     "/auth/create-account",
     "/auth/login",
@@ -24,16 +29,19 @@ export const middleware = async (req) => {
 
   // checking for token in set-password route
   if (pathname.startsWith("/auth/set-password")) {
-    const tokenParams = req.nextUrl.searchParams.get("token");
+    const tokenParams = searchParams.get("token");
     if (!tokenParams)
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      return NextResponse.redirect(new URL(`/auth/login`, req.url));
     else {
       NextResponse.next();
     }
   }
   if (pathname.startsWith("/project/invite")) {
     const tokenParams = req.nextUrl.searchParams.get("token");
-    if (!tokenParams) return NextResponse.redirect(new URL("/", req.url));
+    if (!tokenParams)
+      return NextResponse.redirect(
+        new URL(`/auth/login?callbackUrl=${callbackUrl}`, req.url)
+      );
     else {
       NextResponse.next();
     }
@@ -46,7 +54,9 @@ export const middleware = async (req) => {
 
   // prevent to visit proctected pages without login
   if ((!token && !publicRoutes.includes(pathname)) || pathname === "/auth") {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    return NextResponse.redirect(
+      new URL(`/auth/login?callbackUrl=${callbackUrl}`, req.url)
+    );
   }
 
   // Setting Headers

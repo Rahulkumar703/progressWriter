@@ -27,10 +27,17 @@ const GoToTop = ({ className }) => {
         initial={{ scale: 0.2, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         whileHover={{ scale: 1.1 }}
-        className={cn("group rounded-full fixed bottom-20 right-20", className)}
+        className={cn(
+          "rounded-full fixed lg:bottom-20 lg:right-20 md:bottom-16 md:right-16 bottom-8 right-8",
+          className
+        )}
       >
-        <Button size="icon" onClick={scrollToTop} className="rounded-full">
-          <ArrowUp className="w-5 h-5 text-muted-foreground group-hover:text-background transition-colors" />
+        <Button
+          size="icon"
+          onClick={scrollToTop}
+          className="rounded-full opacity-50 hover:opacity-100"
+        >
+          <ArrowUp className="w-5 h-5 text-background opacity-[inherit] transition-colors" />
         </Button>
       </motion.div>
     )

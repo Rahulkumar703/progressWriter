@@ -4,7 +4,7 @@ import Project from "@/models/Project";
 import { PASSWORD_RESET } from "@/lib/helper";
 
 export const sendPasswordResetMail = async ({ link, email }) => {
-  console.log(link);
+  console.log(link, email);
 };
 
 export const verifyPasswordResetToken = async (token) => {

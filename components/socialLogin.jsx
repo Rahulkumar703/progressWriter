@@ -5,13 +5,26 @@ import { FcGoogle } from "react-icons/fc";
 import { SiGithub } from "react-icons/si";
 import { toast } from "sonner";
 import { useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SocialLogin = ({ isPending: loading }) => {
   const [isPending, startTransition] = useTransition();
+  const params = useSearchParams();
+  const router = useRouter();
   const socialLogin = (provider) => {
     startTransition(async () => {
+      const callbackUrl = params.get("callbackUrl") || "/";
       try {
-        await signIn(provider);
+        const data = await signIn(provider, { redirect: true, callbackUrl });
+        if (data?.error) {
+          toast.error(data.error);
+        } else {
+          toast.success("Signedin Successfully.");
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+      try {
       } catch (error) {
         toast.error(error.message);
       }

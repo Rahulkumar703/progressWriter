@@ -24,7 +24,7 @@ const JoinProject = async ({ searchParams }) => {
   const res = await verifyProjectInviteLink(token);
   if (res && !res?.isVarified)
     return (
-      <Wrapper className={"mt-20"}>
+      <Wrapper className={"mt-24"}>
         <Card className="shadow-2xl">
           <CardHeader>
             <CardTitle>{res?.message}</CardTitle>
@@ -44,7 +44,7 @@ const JoinProject = async ({ searchParams }) => {
   const payload = jwt.decode(token, process.env.JWT_SECRET);
 
   return (
-    <Wrapper className={"mt-20"}>
+    <Wrapper className={"mt-24"}>
       <Card className="shadow-2xl">
         <CardHeader>
           <CardTitle>{res?.project.name}</CardTitle>

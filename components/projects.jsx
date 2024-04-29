@@ -15,7 +15,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const Projects = ({ projects }) => {
   return (
-    <div className="grid xs:grid-cols-[repeat(auto-fit,minmax(300px,1rem))] justify-center gap-4 pb-2">
+    <div className="grid xs:grid-cols-[repeat(auto-fit,minmax(300px,1rem))] justify-center sm:justify-normal  gap-4 pb-2">
       {projects.length ? (
         projects.map((project) => {
           return (

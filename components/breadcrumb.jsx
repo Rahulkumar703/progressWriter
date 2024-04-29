@@ -31,14 +31,14 @@ export function Breadcrumb() {
         <BreadcrumbItem>
           {crumblist.length ? (
             <BreadcrumbLink asChild>
-              <Link href="/" className="flex items-center">
-                <Home className="w-4 h-4 mr-2" />
+              <Link href="/" className="flex items-center sm:text-sm text-xs">
+                <Home className="sm:w-4 sm:h-4 w-3 h-3 mr-2" />
                 Home
               </Link>
             </BreadcrumbLink>
           ) : (
             <BreadcrumbPage className="capitalize">
-              <span className="flex items-center">
+              <span className="flex items-center sm:text-sm text-xs">
                 <Home className="w-4 h-4 mr-2" />
                 Home
               </span>
@@ -61,12 +61,15 @@ export function Breadcrumb() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {index === crumblist.length - 1 ? (
-                <BreadcrumbPage className="capitalize">
+                <BreadcrumbPage className="capitalize sm:text-sm text-xs">
                   {crumb.pathname}
                 </BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href={crumb.href} className="capitalize">
+                  <Link
+                    href={crumb.href}
+                    className="capitalize sm:text-sm text-xs"
+                  >
                     {crumb.pathname}
                   </Link>
                 </BreadcrumbLink>

@@ -12,8 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Code2, LogOut, User2 } from "lucide-react";
+import { Code2, User2 } from "lucide-react";
 import { options } from "@/app/api/auth/[...nextauth]/options";
+import LogoutBtn from "./logoutBtn";
 
 const Header = async () => {
   const session = await getServerSession(options);
@@ -50,12 +51,7 @@ const Header = async () => {
                 </DropdownMenuItem>
               </Link>
               <DropdownMenuSeparator />
-              <Link href={"/auth/logout"}>
-                <DropdownMenuItem className="focus:bg-destructive focus:text-white w-full">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </Link>
+              <LogoutBtn />
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

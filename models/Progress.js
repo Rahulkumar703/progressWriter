@@ -3,15 +3,15 @@ import { model, models, Schema } from "mongoose";
 const PogressSchema = Schema(
   {
     project: {
-      type: Schema.Types.Object,
+      type: Schema.Types.ObjectId,
       ref: "project",
       required: [true, "Project ID is Required"],
       trim: true,
     },
     user: {
-      type: Schema.Types.Object,
+      type: Schema.Types.ObjectId,
       ref: "user",
-      required: [true, "Project ID is Required"],
+      required: [true, "user ID is Required"],
       trim: true,
     },
     message: {
@@ -20,22 +20,14 @@ const PogressSchema = Schema(
       trim: true,
     },
     likes: {
-      type: Number,
-      default: 0,
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+      default: [],
     },
-    comments: [
-      {
-        user: {
-          type: Schema.Types.Object,
-          ref: "user",
-        },
-        message: {
-          type: String,
-          required: [true, "Comment is Required"],
-          trim: true,
-        },
-      },
-    ],
+    comments: {
+      type: [Schema.Types.ObjectId],
+      ref: "comment",
+    },
   },
   { timestamps: true }
 );

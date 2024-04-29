@@ -24,6 +24,7 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import ProjectMembers from "@/components/projectMembers";
 import EditProject from "@/components/editProject";
 import AddProgress from "@/components/addProgress";
+import Progresses from "@/components/progresses";
 
 export async function generateMetadata({ searchParams }) {
   const data = await getProject(searchParams.id);
@@ -41,7 +42,7 @@ const ProjectPage = async ({ searchParams }) => {
   const data = await getProject(searchParams.id);
   const project = data.project;
 
-  const isLoggedInUserAdmin = project.members.find(
+  const isLoggedInUserAdmin = project?.members.find(
     (member) => member.user._id?.toString() === session?.user._id?.toString()
   )?.admin;
 
@@ -61,6 +62,7 @@ const ProjectPage = async ({ searchParams }) => {
                       size="icon"
                       variant="outline"
                       className="rounded-full w-5 h-5 md:w-8 md:h-8"
+                      title="Add Progress"
                     >
                       <Info className="w-4 h-4" />
                     </Button>
@@ -122,7 +124,9 @@ const ProjectPage = async ({ searchParams }) => {
             </div>
             <AddProgress projectId={project._id.toString()} />
           </div>
-          <div className="mt-5 "></div>
+          <div className="mt-5 ">
+            <Progresses projectId={project._id.toString()} />
+          </div>
         </div>
       ) : (
         <NotFoundCard

@@ -5,14 +5,14 @@ import { useEffect } from "react";
 
 const LogoutPage = () => {
   const router = useRouter();
-  const { data } = useSession();
+  const { status } = useSession();
   useEffect(() => {
     const logout = async () => {
       await signOut();
       router.replace("/auth/login");
     };
-    data ? logout() : router.replace("/auth/login");
-  }, [router, data]);
+    status === "authenticated" ? logout() : router.replace("/auth/login");
+  }, [router, status]);
 
   return null;
 };

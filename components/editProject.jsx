@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
-import { Edit } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -20,6 +20,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { Input } from "./ui/input";
 import { updateProjectSchema } from "@/schema/project";
 import { useRef, useTransition } from "react";
@@ -28,7 +40,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "./ui/textarea";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { updateProject } from "@/actions/project";
+import { deleteProject, updateProject } from "@/actions/project";
 import { toast } from "sonner";
 import Wrapper from "./wrapper";
 import { useRouter } from "next/navigation";
@@ -39,7 +51,6 @@ const EditProject = ({ id, name, description, visibility }) => {
   const closeRef = useRef();
   const form = useForm({
     resolver: zodResolver(updateProjectSchema),
-    mode: "onChange",
     defaultValues: {
       id: id,
       name: name,
@@ -47,6 +58,20 @@ const EditProject = ({ id, name, description, visibility }) => {
       visibility: visibility,
     },
   });
+
+  const handleDeleteProject = async () => {
+    startTransition(async () => {
+      try {
+        const data = await deleteProject(id);
+        toast[data.type](data.message);
+        if (data.type === "success") {
+          router.replace(`/`);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    });
+  };
 
   const onSubmit = async (values) => {
     startTransition(async () => {
@@ -56,7 +81,8 @@ const EditProject = ({ id, name, description, visibility }) => {
         if (data.type === "success") {
           const name = form.getValues("name");
           closeRef.current.click();
-          router.replace(`/project/${name}?id=${id}`);
+          router.replace(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
+          router.refresh();
         }
       } catch (error) {
         toast.error(error.message);
@@ -167,16 +193,49 @@ const EditProject = ({ id, name, description, visibility }) => {
                   )}
                 />
               </div>
-              <Button type="submit" className="ml-auto" disabled={isPending}>
-                Update Poject
-                <MdKeyboardArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <div className="flex justify-between items-center">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      className=""
+                      disabled={isPending}
+                    >
+                      <Trash className="w-4 h-4 mr-2" />
+                      Delete Poject
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure to delete the project?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your project and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDeleteProject}>
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
+                <Button type="submit" className="" disabled={isPending}>
+                  Update Poject
+                  <MdKeyboardArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
             </form>
           </Form>
           <DrawerFooter>
             <DrawerClose asChild>
               <Button variant="outline" ref={closeRef}>
-                {" "}
                 Cancel
               </Button>
             </DrawerClose>

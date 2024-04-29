@@ -50,7 +50,6 @@ export const getProject = async (_id) => {
         success: false,
         code: 404,
         message: "Poject not found or not public.",
-        project,
       };
     }
     return {
@@ -58,6 +57,40 @@ export const getProject = async (_id) => {
       code: 200,
       message: "Poject fetched Successfuly.",
       project,
+    };
+  }
+};
+
+export const deleteProject = async (_id) => {
+  const session = await getServerSession(options);
+  if (!session || !session?.user._id) {
+    return {
+      success: false,
+      message: "Please login to see your projects",
+      code: 403,
+    };
+  } else {
+    const project = await Project.findOne({
+      $and: [
+        { "members.admin": true },
+        { "members.user": session.user._id },
+        { _id },
+      ],
+    });
+
+    if (!project) {
+      return {
+        success: false,
+        code: 404,
+        message: "You are not allowed to perform this action",
+      };
+    }
+    await Project.deleteOne({ _id });
+    revalidatePath(`/`);
+    return {
+      type: "success",
+      code: 200,
+      message: "Poject deleted Successfuly.",
     };
   }
 };
@@ -169,8 +202,8 @@ export const updateProject = async (values) => {
       } else if (result.success) {
         const { name, description, id, visibility } = result.data;
 
-        // Create the new project
-        const updatedPrject = await Project.updateOne(
+        // Update the project
+        await Project.updateOne(
           { _id: id },
           {
             $set: {
@@ -180,7 +213,6 @@ export const updateProject = async (values) => {
             },
           }
         );
-
         revalidatePath("/");
         revalidatePath(`/project/${name.replaceAll(" ", "+")}?id=${id}`);
 
@@ -356,7 +388,9 @@ export const addMember = async (projectId) => {
       await project.save();
 
       revalidatePath(`/`);
-      revalidatePath(`/project/${project.name.replaceAll(" ", "+")}?id=${id}`);
+      revalidatePath(
+        `/project/${project.name.replaceAll(" ", "+")}?id=${projectId}`
+      );
       return {
         type: "success",
         code: 200,

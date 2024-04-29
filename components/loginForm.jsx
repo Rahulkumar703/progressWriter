@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -32,6 +32,7 @@ import { loginSchema } from "@/schema/auth";
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const params = useSearchParams();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -41,18 +42,18 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (values) => {
+    const callbackUrl = params.get("callbackUrl") || "/";
     startTransition(async () => {
       try {
         const data = await signIn("credentials", {
-          redirect: false,
+          redirect: true,
           ...values,
+          callbackUrl,
         });
-        console.log(data);
         if (data?.error) {
           toast.error(data.error);
         } else {
-          toast.success("Sigedin Successfully.");
-          router.push("/");
+          toast.success("Signedin Successfully.");
         }
       } catch (error) {
         toast.error(error.message);

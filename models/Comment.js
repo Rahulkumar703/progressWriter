@@ -3,13 +3,13 @@ import { model, models, Schema } from "mongoose";
 const CommentSchema = Schema(
   {
     progress: {
-      type: Schema.Types.Object,
+      type: Schema.Types.ObjectId,
       ref: "progress",
       required: [true, "Progress ID is Required"],
       trim: true,
     },
     user: {
-      type: Schema.Types.Object,
+      type: Schema.Types.ObjectId,
       ref: "user",
       required: [true, "User ID is Required"],
       trim: true,
@@ -20,15 +20,20 @@ const CommentSchema = Schema(
       trim: true,
     },
     likes: {
-      type: Number,
-      default: 0,
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+      default: [],
     },
-    replies: [
-      {
-        type: Schema.Types.Object,
-        ref: "comment",
-      },
-    ],
+    parentCommentId: {
+      type: Schema.Types.ObjectId,
+      ref: "comment",
+      default: null,
+    },
+    replies: {
+      type: [Schema.Types.ObjectId],
+      ref: "comment",
+      default: [],
+    },
   },
   { timestamps: true }
 );
